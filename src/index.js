@@ -24,14 +24,14 @@ app.get("/fruits", (req, res) => {
 });
 
 app.post("/fruits", (req, res) => {
-  const { name, color } = req.body;
+  const { name, color, taste } = req.body;
   if (!name || !color || !taste) {
     return res
       .status(400)
       .json({ error: "Name, color, and taste are required" });
   }
   const newFruit = { id: randomUUID(), name, color, taste };
-  fruits.push(newFruit);
+  fruitsStorage.push(newFruit);
   res.status(201).json(newFruit);
 });
 
