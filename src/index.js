@@ -1,14 +1,21 @@
 import express from "express";
+import { randomUUID } from "node:crypto";
 
 const app = express();
 const port = 3000;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("<h1>Hello Express!</h1><p>Your server is working!</p>");
+let fruits = [
+  { id: randomUUID(), name: "Apple", color: "Red" },
+  { id: randomUUID(), name: "Banana", color: "Yellow" },
+  { id: randomUUID(), name: "Grapes", color: "Green" },
+  { id: randomUUID(), name: "Peach", color: "Peach" },
+  { id: randomUUID(), name: "Plum", color: "Purple" },
+];
+
+app.get("fruits", (req, res) => {
+  res.status(200).json(fruits);
 });
 
 app.listen(port, () => {
