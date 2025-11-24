@@ -6,7 +6,7 @@ const port = 3000;
 
 app.use(express.json());
 
-let fruits = [
+let fruitsStorage = [
   {
     id: randomUUID(),
     name: "Apple",
@@ -19,8 +19,8 @@ let fruits = [
   { id: randomUUID(), name: "Plum", color: "Purple", taste: "tart" },
 ];
 
-app.get("fruits", (req, res) => {
-  res.status(200).json(fruits);
+app.get("/fruits", (req, res) => {
+  res.status(200).json({Fruits: fruitsStorage});
 });
 
 app.post("/fruits", (req, res) => {
@@ -36,19 +36,21 @@ app.post("/fruits", (req, res) => {
 });
 
 app.get("/fruits/:id", (req, res) => {
-  const fruit = fruits.find(fruit => fruit.id === req.params.id);
+  const fruit = fruits.find((fruit) => fruit.id === req.params.id);
   if (!fruit) return res.status(404).json({ error: "Fruit not found" });
   res.json(fruit);
 });
 
 app.delete("/fruits/:id", (req, res) => {
-  const fruit = fruits.find(fruit => fruit.id === req.params.id);
+  const fruit = fruits.find((fruit) => fruit.id === req.params.id);
   if (!fruit) return res.status(404).json({ error: "Fruit not found" });
-  
-  fruits = fruits.filter(fruit => fruit.id !== req.params.id);
+
+  fruits = fruits.filter((fruit) => fruit.id !== req.params.id);
   res.json({ message: "Fruit deleted", fruit });
 });
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+
+export default app;
