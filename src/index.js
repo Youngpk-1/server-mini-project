@@ -36,17 +36,13 @@ app.post("/fruits", (req, res) => {
 });
 
 app.get("/fruits/:id", (req, res) => {
-  const fruit = fruitsStorage.find(
-    (fruit) => fruitsStorage.id === req.params.id
-  );
+  const fruit = fruitsStorage.find((fruit) => fruit.id === req.params.id);
   if (!fruit) return res.status(404).json({ error: "Fruit not found" });
   res.json(fruit);
 });
 
 app.delete("/fruits/:id", (req, res) => {
-  const fruit = fruitsStorage.find(
-    (fruit) => fruitsStorage.id === req.params.id
-  );
+  const fruit = fruitsStorage.find((fruit) => fruit.id === req.params.id);
   if (!fruit) return res.status(404).json({ error: "Fruit not found" });
 
   fruitsStorage = fruitsStorage.filter((fruit) => fruit.id !== req.params.id);
