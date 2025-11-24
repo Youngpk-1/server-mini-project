@@ -7,15 +7,32 @@ const port = 3000;
 app.use(express.json());
 
 let fruits = [
-  { id: randomUUID(), name: "Apple", color: "Red" },
-  { id: randomUUID(), name: "Banana", color: "Yellow" },
-  { id: randomUUID(), name: "Grapes", color: "Green" },
-  { id: randomUUID(), name: "Peach", color: "Peach" },
-  { id: randomUUID(), name: "Plum", color: "Purple" },
+  {
+    id: randomUUID(),
+    name: "Apple",
+    color: "Red",
+    taste: ["sweet", "tart", "sour"],
+  },
+  { id: randomUUID(), name: "Banana", color: "Yellow", taste: "sweet" },
+  { id: randomUUID(), name: "Grapes", color: "Green", taste: "sweet/sour" },
+  { id: randomUUID(), name: "Peach", color: "Peach", taste: "semi-sweet" },
+  { id: randomUUID(), name: "Plum", color: "Purple", taste: "tart" },
 ];
 
 app.get("fruits", (req, res) => {
   res.status(200).json(fruits);
+});
+
+app.post("/fruits", (req, res) => {
+  const { name, color } = req.body;
+  if (!name || !color || !taste) {
+    return res
+      .status(400)
+      .json({ error: "Name, color, and taste are required" });
+  }
+  const newFruit = { id: randomUUID(), name, color, taste };
+  fruits.push(newFruit);
+  res.status(201).json(newFruit);
 });
 
 app.listen(port, () => {
