@@ -35,6 +35,20 @@ app.post("/fruits", (req, res) => {
   res.status(201).json(newFruit);
 });
 
+app.get("/fruits/:id", (req, res) => {
+  const fruit = fruits.find(fruit => fruit.id === req.params.id);
+  if (!fruit) return res.status(404).json({ error: "Fruit not found" });
+  res.json(fruit);
+});
+
+app.delete("/fruits/:id", (req, res) => {
+  const fruit = fruits.find(fruit => fruit.id === req.params.id);
+  if (!fruit) return res.status(404).json({ error: "Fruit not found" });
+  
+  fruits = fruits.filter(fruit => fruit.id !== req.params.id);
+  res.json({ message: "Fruit deleted", fruit });
+});
+
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
