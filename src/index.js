@@ -20,7 +20,7 @@ let fruitsStorage = [
 ];
 
 app.get("/fruits", (req, res) => {
-  res.status(200).json({Fruits: fruitsStorage});
+  res.status(200).json({ Fruits: fruitsStorage });
 });
 
 app.post("/fruits", (req, res) => {
@@ -36,16 +36,20 @@ app.post("/fruits", (req, res) => {
 });
 
 app.get("/fruits/:id", (req, res) => {
-  const fruit = fruits.find((fruit) => fruit.id === req.params.id);
+  const fruit = fruitsStorage.find(
+    (fruit) => fruitsStorage.id === req.params.id
+  );
   if (!fruit) return res.status(404).json({ error: "Fruit not found" });
   res.json(fruit);
 });
 
 app.delete("/fruits/:id", (req, res) => {
-  const fruit = fruits.find((fruit) => fruit.id === req.params.id);
+  const fruit = fruitsStorage.find(
+    (fruit) => fruitsStorage.id === req.params.id
+  );
   if (!fruit) return res.status(404).json({ error: "Fruit not found" });
 
-  fruits = fruits.filter((fruit) => fruit.id !== req.params.id);
+  fruitsStorage = fruitsStorage.filter((fruit) => fruit.id !== req.params.id);
   res.json({ message: "Fruit deleted", fruit });
 });
 
